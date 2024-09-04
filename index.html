@@ -1,42 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Part Number Scanner</title>
+    <title>부품 번호 검색기</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 20px;
-        }
-        video {
-            width: 100%;
-            max-width: 600px;
-            height: auto;
-            border: 1px solid #ccc;
-            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
         }
         input {
+            margin: 10px;
             padding: 10px;
             font-size: 16px;
-            margin-bottom: 20px;
-            width: calc(100% - 24px);
         }
-        .match {
-            color: green;
-            font-size: 24px;
-            font-weight: bold;
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
         }
     </style>
 </head>
 <body>
-    <h1>Part Number Scanner</h1>
-    <input type="text" id="partNumber" placeholder="Enter part number to search">
-    <video id="video" autoplay></video>
-    <p id="result"></p>
+    <h1>부품 번호 검색기</h1>
+    <input type="text" id="part1" placeholder="부품 번호의 일부 (예: 100)">
+    <input type="text" id="part2" placeholder="부품 번호의 일부 (예: 470)">
+    <button onclick="checkPartNumbers()">확인</button>
+    <div id="result"></div>
 
-    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@2.1.1/dist/tesseract.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
+
