@@ -32,9 +32,10 @@
     <h1>부품 번호 검색기</h1>
     <input type="text" id="part1" placeholder="부품 번호의 일부 (예: 100)">
     <input type="text" id="part2" placeholder="부품 번호의 일부 (예: 470)">
-    <button onclick="checkPartNumbers()">확인</button>
+    <button onclick="openCamera()">카메라 열기</button>
     <div id="result"></div>
 
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@2.1.0/dist/tesseract.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
