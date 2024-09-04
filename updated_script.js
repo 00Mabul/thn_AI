@@ -1,47 +1,25 @@
-const video = document.getElementById('video');
-const partNumberInput = document.getElementById('partNumber');
-const result = document.getElementById('result');
+// script.js
 
-// Request access to the camera (prefer rear camera)
-navigator.mediaDevices.getUserMedia({
-    video: {
-        facingMode: { exact: "environment" } // Prefer rear camera
+// 부품 번호 예시 데이터
+const partNumbers = [
+    'P91100-P9470',
+    'P91850-DU010',
+    'P91234-P5678'
+];
+
+async function checkPartNumbers() {
+    const part1 = document.getElementById('part1').value;
+    const part2 = document.getElementById('part2').value;
+    const resultDiv = document.getElementById('result');
+
+    // 예시 데이터에서 일치하는 부품 번호 찾기
+    const matches = partNumbers.filter(partNumber =>
+        partNumber.includes(part1) && partNumber.includes(part2)
+    );
+
+    if (matches.length > 0) {
+        resultDiv.textContent = '확인: 일치하는 부품 번호가 있습니다.';
+    } else {
+        resultDiv.textContent = '일치하는 부품 번호가 없습니다.';
     }
-})
-    .then((stream) => {
-        video.srcObject = stream;
-    })
-    .catch((err) => {
-        console.error("Error accessing camera: ", err);
-    });
-
-function scanFrame() {
-    const canvas = document.createElement('canvas');
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    const context = canvas.getContext('2d');
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-    return canvas;
 }
-
-function processFrame() {
-    const canvas = scanFrame();
-    Tesseract.recognize(canvas, 'eng', { logger: (m) => console.log(m) })
-        .then(({ data: { text } }) => {
-            const cleanedText = text.replace(/\s/g, '').toUpperCase(); // Remove whitespace and uppercase
-            const partNumber = partNumberInput.value.replace(/\s/g, '').toUpperCase();
-            if (cleanedText.includes(partNumber) && partNumber) {
-                result.textContent = "Part Number Found!";
-                result.className = "match";
-            } else {
-                result.textContent = "Searching...";
-                result.className = "";
-            }
-        })
-        .catch((err) => {
-            console.error("Error processing frame: ", err);
-        });
-}
-
-// Continuously scan the video feed
-setInterval(processFrame, 1000);
